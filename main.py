@@ -4,9 +4,12 @@ from pynput import mouse
 
 coord_first_button = []
 coord_second_button = []
-help_message = '''1) Наведи на кнопку "Повторить" первого гремлина и нажми "1" чтобы запомнить координаты первой кнопки.
+coord_third_button = []
+help_message = '''
+1) Наведи на кнопку "Повторить" первого гремлина и нажми "1" чтобы запомнить координаты первой кнопки.
 2) Наведи на кнопку "Повторить" второго гремлина и нажми "2" чтобы запомнить координаты второй кнопки.
-3) Открой окно с гремлинами и нажми "0" чтобы запустить процесс автоматической добычи ресурсов.
+3) Наведи на кнопку "Повторить" второго гремлина и нажми "3" чтобы запомнить координаты второй кнопки.
+4) Открой окно с гремлинами и нажми "0" чтобы запустить процесс автоматической добычи ресурсов.
 Для остановки добычи закрой данное окно.
 '''
 
@@ -20,6 +23,10 @@ def toggle_event(key):
         global coord_second_button
         coord_second_button = mouse.Controller().position
         print(f"Координаты второго гремлина: {coord_second_button}")
+    if key == keyboard.KeyCode(char='3'):
+        global coord_third_button
+        coord_third_button = mouse.Controller().position
+        print(f"Координаты третьего гремлина: {coord_third_button}")
     if key == keyboard.KeyCode(char='0'):
         print('Процесс добычи ресурсов включен!')
         clicker()
@@ -33,6 +40,9 @@ def clicker():
         mouse.Controller().click(mouse.Button.left, 1)
         time.sleep(1)
         mouse.Controller().position = coord_second_button
+        mouse.Controller().click(mouse.Button.left, 1)
+        time.sleep(1)
+        mouse.Controller().position = coord_third_button
         mouse.Controller().click(mouse.Button.left, 1)
         time.sleep(65)
 
